@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeeU智能训练系统 | 你的24小时心智健身房</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --accent-1: #8b5cf6;
+            --accent-2: #ec4899;
+            --accent-3: #f59e0b;
+            --accent-4: #10b981;
+            --bg-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+
+        /* 导航栏 */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        nav .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        /* 英雄区 */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .hero .description {
+            font-size: 1.125rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        /* 痛点区块 */
+        .pain-points {
+            background: white;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pain-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .pain-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .pain-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .pain-item h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .pain-item p {
+            color: var(--text-light);
+            font-size: 0.9375rem;
+        }
+
+        /* 产品模块 */
+        .modules {
+            background: var(--bg-light);
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .module-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .module-card h3 {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+
+        .module-features {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .module-features li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .module-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* 定价方案 */
+        .pricing {
+            background: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.recommended {
+            border-color: var(--primary);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.2);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.375rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .pricing-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .pricing-subtitle {
+            font-size: 0.9375rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price small {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .pricing-structure {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--text-dark);
+            font-size: 0.9375rem;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .pricing-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .pricing-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .pricing-card.recommended .pricing-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-1) 100%);
+        }
+
+        /* 对比表格 */
+        .comparison {
+            background: var(--bg-light);
+        }
+
+        .comparison-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.25rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            background: var(--bg-dark);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* 价值区 */
+        .value {
+            background: white;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .value-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-label {
+            font-size: 1.125rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .value-desc {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* 标题样式 */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        /* CTA区 */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-1) 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button-large {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background: white;
+            color: var(--primary);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.3s;
+        }
+
+        .cta-button-large:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.125rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-table {
+                font-size: 0.875rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        /* 里程碑卡片特殊样式 */
+        .milestone-structure {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .milestone-item:last-child {
+            border-bottom: none;
+        }
+
+        .milestone-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .milestone-price {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container">
+            <div class="logo">SeeU 智能训练系统</div>
+            <a href="#pricing" class="cta-button">立即开始</a>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section class="hero">
+        <div class="container">
+            <h1>你的24小时心智健身房</h1>
+            <p class="subtitle">从"被动经历者"到"主动塑造者"</p>
+            <p class="description">
+                不是咨询产品，而是训练系统。<br>
+                通过 AI个性化测评 + 专属导员 + 高价值社群，<br>
+                帮助你建立可持续的自我进化能力。
+            </p>
+        </div>
+    </section>
+
+    <!-- 你是否正在经历 -->
+    <section class="pain-points">
+        <div class="container">
+            <h2 class="section-title">你是否正在经历这些困境？</h2>
+            <div class="pain-grid">
+                <div class="pain-item">
+                    <div class="pain-icon">⏰</div>
+                    <h3>时间不够用</h3>
+                    <p>事务繁杂，协作困难，被日常琐事淹没</p>
+                </div>
+                <div class="pain-item">
+                    <div class="pain-icon">😔</div>
+                    <h3>成长感薄弱</h3>
+                    <p>努力未获认可，看不到进步</p>
+                </div>
+                <div class="pain-item">
+                    <div class="pain-icon">🔄</div>
+                    <h3>陷入重复模式</h3>
+                    <p>难以跳出舒适区，总是原地打转</p>
+                </div>
+                <div class="pain-item">
+                    <div class="pain-icon">🌫️</div>
+                    <h3>迷茫无激情</h3>
+                    <p>对工作无激情，感到空虚迷茫</p>
+                </div>
+                <div class="pain-item">
+                    <div class="pain-icon">🚫</div>
+                    <h3>无法启动</h3>
+                    <p>不清楚第一步该做什么，在挑战面前犹豫不决</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品核心模块 -->
+    <section class="modules">
+        <div class="container">
+            <h2 class="section-title">六大核心模块，全方位支持你的成长</h2>
+            <p class="section-subtitle">
+                不是单次咨询，而是一套完整的个人进化系统
+            </p>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🤖</div>
+                    <h3>1. AI个性化测评系统</h3>
+                </div>
+                <ul class="module-features">
+                    <li>月度定制测评，精准识别你的当前状态</li>
+                    <li>完整PDF报告 + 可复制文字内容</li>
+                    <li>可粘贴至DeepSeek/豆包进行阶段性提问</li>
+                    <li>包含：现状分析、需求分析、行动建议</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🎯</div>
+                    <h3>2. 专属训练模块（月度更新）</h3>
+                </div>
+                <ul class="module-features">
+                    <li>基于AI测评结果的个性化训练模板</li>
+                    <li>日常行动建议 + 保底训练动作 + 延伸训练</li>
+                    <li>训练标准与需求精准对接</li>
+                    <li>提供结构化提示词，配合第三方AI使用</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">📊</div>
+                    <h3>3. 训练数据追踪系统</h3>
+                </div>
+                <ul class="module-features">
+                    <li>日常行动记录 + 刻意训练打卡</li>
+                    <li>个人数据看板（训练频率、完成率、状态趋势）</li>
+                    <li>个人进化档案（全周期数据沉淀）</li>
+                    <li>成长轨迹可视化</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">👥</div>
+                    <h3>4. 每周线上分享会</h3>
+                </div>
+                <ul class="module-features">
+                    <li>每周1次，固定时段（如每周三晚）</li>
+                    <li>突破案例拆解 + 共性问题研讨</li>
+                    <li>导员点评提炼逻辑</li>
+                    <li>会后输出精华笔记</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">💬</div>
+                    <h3>5. 高价值社群环境</h3>
+                </div>
+                <ul class="module-features">
+                    <li>小班制（非大群），高质量信息生态</li>
+                    <li>每日打卡激励 + 突破案例分享</li>
+                    <li>同侪压力与激励，长期陪伴感</li>
+                    <li>训练资源库（工具、模板、案例）</li>
+                </ul>
+            </div>
+
+            <div class="module-card">
+                <div class="module-header">
+                    <div class="module-icon">🎓</div>
+                    <h3>6. 专属导员支持</h3>
+                </div>
+                <ul class="module-features">
+                    <li>每月1次沟通训练调整</li>
+                    <li>测评报告深度解读 + 训练数据复盘</li>
+                    <li>调整专属训练模块，精准突破卡点</li>
+                    <li>全年持续陪伴，不是单次咨询</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 定价方案 -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">选择适合你的方案</h2>
+            <p class="section-subtitle">
+                三种付费方式，产品内容完全一致，只是降低不同用户的决策门槛
+            </p>
+
+            <div class="pricing-grid">
+                <!-- 方案一：按月订阅 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">按月订阅</div>
+                        <div class="pricing-subtitle">灵活选择，最低3个月起订</div>
+                        <div class="pricing-price">1,999<small>元/月</small></div>
+                        <div style="color: var(--text-light); font-size: 0.875rem; margin-top: 0.5rem;">
+                            年度23,988元
+                        </div>
+                    </div>
+
+                    <div class="pricing-structure">
+                        <strong>订阅方式：</strong><br>
+                        可选3个月、4个月、半年等<br>
+                        按月灵活订阅
+                    </div>
+
+                    <ul class="pricing-features">
+                        <li>AI训练模板</li>
+                        <li>3-5人训练群组</li>
+                        <li>双周线上交流</li>
+                        <li>月度专属导员沟通</li>
+                        <li>训练数据追踪系统</li>
+                        <li>第三方AI使用指南</li>
+                    </ul>
+
+                    <button class="pricing-button">立即开始训练</button>
+                </div>
+
+                <!-- 方案二：年度方案 -->
+                <div class="pricing-card recommended">
+                    <div class="pricing-badge">推荐方案</div>
+                    <div class="pricing-header">
+                        <div class="pricing-name">年度深度训练</div>
+                        <div class="pricing-subtitle">半定制化，关键节点深度介入</div>
+                        <div class="pricing-price">24,000<small>元/年</small></div>
+                        <div style="color: var(--success); font-size: 0.875rem; margin-top: 0.5rem;">
+                            ⭐ 原价26,388元（2,199元/月×12），优惠2,388元
+                        </div>
+                    </div>
+
+                    <div class="pricing-structure">
+                        <strong>付费方式：</strong><br>
+                        一次性付清 24,000元<br>
+                        锁定全年深度服务
+                    </div>
+
+                    <ul class="pricing-features">
+                        <li>AI训练模板</li>
+                        <li>3-5人训练群组</li>
+                        <li>双周线上交流</li>
+                        <li>月度专属导员沟通</li>
+                        <li>训练数据追踪系统</li>
+                        <li>第三方AI使用指南</li>
+                        <li><strong>关键节点人力介入</strong>（不限每月一次）</li>
+                        <li><strong>每季度深度复盘</strong>（90-120分钟，可分多次）</li>
+                        <li><strong>可视化思维模式变化图谱报告</strong></li>
+                        <li><strong>每1-2个月AI训练系统深度报告</strong></li>
+                        <li>年度个人进化档案</li>
+                    </ul>
+
+                    <button class="pricing-button">立即开始训练</button>
+                </div>
+
+                <!-- 方案三：个体定制化陪跑 -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-name">个体定制化陪跑</div>
+                        <div class="pricing-subtitle">2026年目标导向，风险共担</div>
+                        <div class="pricing-price">30,000<small>元起/年</small></div>
+                        <div style="color: var(--text-light); font-size: 0.875rem; margin-top: 0.5rem;">
+                            根据目标难易程度定价
+                        </div>
+                    </div>
+
+                    <div class="pricing-structure">
+                        <strong>付费方式：</strong><br>
+                        里程碑付费 + 风险共担<br>
+                        完全定制化服务
+                    </div>
+
+                    <ul class="pricing-features">
+                        <li>包含年度方案所有内容</li>
+                        <li><strong>2026年明确目标导向</strong></li>
+                        <li><strong>完全定制化训练方案</strong></li>
+                        <li><strong>里程碑付费机制</strong></li>
+                        <li><strong>风险共担模式</strong></li>
+                        <li>从内到外真正改变</li>
+                        <li>专属导员全程深度陪跑</li>
+                    </ul>
+
+                    <button class="pricing-button">咨询定制方案</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 方案对比 -->
+    <section class="comparison">
+        <div class="container">
+            <h2 class="section-title">三种方案对比</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>对比维度</th>
+                        <th>分阶段付费</th>
+                        <th>年付一次性</th>
+                        <th>里程碑付费</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>价格</td>
+                        <td>1,999元/月</td>
+                        <td>24,000元/年</td>
+                        <td>30,000元起/年</td>
+                    </tr>
+                    <tr>
+                        <td>最低订阅</td>
+                        <td>3个月起订</td>
+                        <td>一年</td>
+                        <td>一年</td>
+                    </tr>
+                    <tr>
+                        <td>AI训练模板</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td>✓ 完全定制</td>
+                    </tr>
+                    <tr>
+                        <td>训练群组</td>
+                        <td>3-5人小组</td>
+                        <td>3-5人小组</td>
+                        <td>个性化配置</td>
+                    </tr>
+                    <tr>
+                        <td>线上交流</td>
+                        <td>双周1次</td>
+                        <td>双周1次</td>
+                        <td>按需安排</td>
+                    </tr>
+                    <tr>
+                        <td>专属导员沟通</td>
+                        <td>每月1次</td>
+                        <td>每月1次</td>
+                        <td>高频深度</td>
+                    </tr>
+                    <tr>
+                        <td>关键节点介入</td>
+                        <td>-</td>
+                        <td>✓ 不限次数</td>
+                        <td>✓ 全程深度</td>
+                    </tr>
+                    <tr>
+                        <td>季度深度复盘</td>
+                        <td>-</td>
+                        <td>✓ 90-120分钟</td>
+                        <td>✓ 更深度</td>
+                    </tr>
+                    <tr>
+                        <td>思维模式图谱</td>
+                        <td>-</td>
+                        <td>✓ 年度可视化</td>
+                        <td>✓ 实时追踪</td>
+                    </tr>
+                    <tr>
+                        <td>AI深度报告</td>
+                        <td>-</td>
+                        <td>✓ 每1-2个月</td>
+                        <td>✓ 月度定制</td>
+                    </tr>
+                    <tr>
+                        <td>付费方式</td>
+                        <td>按月付费</td>
+                        <td>年付一次性</td>
+                        <td>里程碑+风险共担</td>
+                    </tr>
+                    <tr>
+                        <td>适合人群</td>
+                        <td>灵活尝试</td>
+                        <td>系统成长</td>
+                        <td>目标导向</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 价值支撑 -->
+    <section class="value">
+        <div class="container">
+            <h2 class="section-title">三种方案的核心差异</h2>
+            <p class="section-subtitle">
+                从灵活尝试到系统成长，再到目标导向的完全定制
+            </p>
+
+            <div class="value-grid">
+                <div class="value-item">
+                    <div class="value-number">1,999元/月</div>
+                    <div class="value-label">按月订阅</div>
+                    <div class="value-desc">基础训练系统，灵活订阅</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-number">24,000元/年</div>
+                    <div class="value-label">年度深度训练</div>
+                    <div class="value-desc">半定制化，关键节点深度介入</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-number">30,000元起/年</div>
+                    <div class="value-label">个体定制化陪跑</div>
+                    <div class="value-desc">2026目标导向，风险共担</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem; padding: 2rem; background: var(--bg-light); border-radius: 12px;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--text-dark);">年度方案的核心升级</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">关键节点介入</div>
+                        <div style="font-size: 0.875rem; color: var(--text-light);">不限每月一次，在你需要的时候</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">季度深度复盘</div>
+                        <div style="font-size: 0.875rem; color: var(--text-light);">90-120分钟，可分多次</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📈</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">可视化图谱报告</div>
+                        <div style="font-size: 0.875rem; color: var(--text-light);">一年思维模式变化追踪</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🤖</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">AI深度报告</div>
+                        <div style="font-size: 0.875rem; color: var(--text-light);">每1-2个月系统化分析</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>准备好开始你的蜕变之旅了吗？</h2>
+            <p>从"被动经历者"到"主动塑造者"，只差一个决定</p>
+            <a href="#pricing" class="cta-button-large">立即选择方案</a>
+        </div>
+    </section>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // 定价按钮点击
+        document.querySelectorAll('.pricing-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('请联系客服进行咨询和报名\n\n微信：[待填写]\n电话：[待填写]');
+            });
+        });
+    </script>
+
+</body>
+</html>
