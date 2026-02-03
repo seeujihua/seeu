@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>操作手册入口 - SeeU突破进阶训练</title>
+    <title>资料中心入口 - SeeU突破进阶训练</title>
     <style>
-        /* 基础样式，确保页面简洁美观 */
         * {
             margin: 0;
             padding: 0;
@@ -19,104 +18,146 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
             color: #333;
         }
         .container {
             text-align: center;
-            max-width: 800px;
+            max-width: 1000px;
             width: 100%;
-            background-color: white;
-            border-radius: 20px;
-            padding: 50px 40px;
-            box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+        }
+        .header {
+            margin-bottom: 50px;
         }
         .logo {
             font-size: 3.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #2a5298;
         }
         h1 {
             color: #1e3c72;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: 2.5rem;
         }
         .subtitle {
             font-size: 1.2rem;
             color: #666;
-            margin-bottom: 40px;
+            max-width: 700px;
+            margin: 0 auto;
             line-height: 1.6;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
-        /* 核心：主入口按钮样式 */
-        .main-entry-button {
+        /* 核心：双入口卡片容器 */
+        .portal-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .portal-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        .card-desc {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+        .card-button {
             display: inline-block;
+            padding: 16px 35px;
             background: linear-gradient(to right, #4776E6, #8E54E9);
             color: white;
-            font-size: 1.4rem;
-            font-weight: 600;
-            padding: 20px 50px;
-            border-radius: 60px;
             text-decoration: none;
-            margin: 30px 0;
-            box-shadow: 0 7px 20px rgba(142, 84, 233, 0.4);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            margin-top: auto;
         }
-        .main-entry-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(142, 84, 233, 0.5);
-        }
-        .main-entry-button:active {
-            transform: translateY(-2px);
-        }
-        .note {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #f8f9ff;
-            border-radius: 12px;
-            border-left: 5px solid #4dabf7;
-            font-size: 1rem;
-            color: #555;
-            text-align: left;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .card-button:hover {
+            box-shadow: 0 7px 20px rgba(142, 84, 233, 0.4);
+            background: linear-gradient(to right, #3e6acf, #8049d3);
         }
         .footer {
-            margin-top: 40px;
+            margin-top: 60px;
             color: #888;
             font-size: 0.9rem;
+            text-align: center;
+        }
+        /* 响应式布局：小屏幕时卡片垂直堆叠 */
+        @media (max-width: 768px) {
+            .portal-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .portal-card {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 标题区域 -->
-        <div class="logo">📘</div>
-        <h1>SeeU 突破进阶训练</h1>
-        <p class="subtitle">
-            欢迎访问训练资料中心。本入口页为您提供完整的操作指南、训练步骤与核心功能说明。请点击下方主按钮进入总操作指南手册。
-        </p>
+        <div class="header">
+            <div class="logo">📘</div>
+            <h1>SeeU 突破进阶训练</h1>
+            <p class="subtitle">欢迎访问训练资料中心。请根据您的需求，选择下方对应的手册入口。</p>
+        </div>
 
-        <!-- 核心：主入口按钮 -->
-        <a href="SeeU突破进阶训练 - 总操作指南.html" class="main-entry-button">
-            🚀 进入《SeeU突破进阶训练 - 总操作指南》
-        </a>
+        <!-- 核心：双入口卡片 -->
+        <div class="portal-container">
+            <!-- 卡片1：总操作指南 -->
+            <div class="portal-card">
+                <div class="card-icon">📖</div>
+                <h2 class="card-title">总操作指南</h2>
+                <p class="card-desc">
+                    包含SeeU突破进阶训练系统的完整使用流程、步骤详解、功能操作说明及常见问题解答。建议所有用户首先阅读。
+                </p>
+                <a href="SeeU突破进阶训练 - 总操作指南.html" class="card-button">
+                    进入详细操作指南
+                </a>
+            </div>
 
-        <!-- 补充说明 -->
-        <div class="note">
-            <p><strong>使用提示：</strong></p>
-            <p>• 点击上方按钮将跳转至完整的总操作指南页面。</p>
-            <p>• 如果您是首次访问，请务必阅读“快速开始”部分。</p>
-            <p>• 如需返回此页，请使用浏览器的“后退”按钮或手册内的首页链接。</p>
+            <!-- 卡片2：产品介绍 -->
+            <div class="portal-card">
+                <div class="card-icon">✨</div>
+                <h2 class="card-title">系统产品介绍</h2>
+                <p class="card-desc">
+                    全面介绍SeeU突破进阶训练系统的设计理念、核心功能模块、技术优势以及它能为您带来的具体价值。
+                </p>
+                <a href="SeeU突破进阶训练系统-产品介绍.html" class="card-button">
+                    了解产品详情
+                </a>
+            </div>
         </div>
 
         <div class="footer">
-            <p>© 2025 SeeU 训练平台 • 本页面为官方操作指南入口</p>
+            <p>© 2025 SeeU 训练平台 • 官方资料中心入口</p>
+            <p style="margin-top:5px; font-size:0.85rem; color:#aaa;">本页面索引所有关键文档</p>
         </div>
     </div>
 </body>
