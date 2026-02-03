@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜕变之旅 | 巩固3期成长结营仪式</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --accent-1: #8b5cf6;
+            --accent-2: #ec4899;
+            --accent-3: #f59e0b;
+            --accent-4: #10b981;
+            --accent-5: #06b6d4;
+            --bg-dark: #0f172a;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-light);
+        }
+
+        /* 导航栏 */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        /* 英雄区 */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+        }
+
+        .hero .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .hero .stat-item {
+            text-align: center;
+        }
+
+        .hero .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .hero .stat-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        /* 卡片 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        /* 可展开的转变卡片 */
+        .transformation-card {
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .transformation-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .transformation-header {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .transformation-card.expanded .transformation-header {
+            border-bottom-color: var(--border);
+            background: var(--bg-light);
+        }
+
+        .transformation-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .transform-from, .transform-to {
+            flex: 1;
+        }
+
+        .transform-from {
+            color: #ef4444;
+            opacity: 0.7;
+            text-decoration: line-through;
+        }
+
+        .transform-to {
+            color: var(--accent-4);
+            font-weight: 600;
+        }
+
+        .transform-arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0 1rem;
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            transition: transform 0.3s;
+        }
+
+        .transformation-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .transformation-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .transformation-card.expanded .transformation-content {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .transformation-examples {
+            padding: 2rem;
+        }
+
+        .example-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .example-item:nth-child(1) { border-left-color: var(--accent-1); }
+        .example-item:nth-child(2) { border-left-color: var(--accent-2); }
+        .example-item:nth-child(3) { border-left-color: var(--accent-3); }
+        .example-item:nth-child(4) { border-left-color: var(--accent-4); }
+        .example-item:nth-child(5) { border-left-color: var(--accent-5); }
+
+        .example-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .example-item:nth-child(1) .example-avatar { background: var(--accent-1); }
+        .example-item:nth-child(2) .example-avatar { background: var(--accent-2); }
+        .example-item:nth-child(3) .example-avatar { background: var(--accent-3); }
+        .example-item:nth-child(4) .example-avatar { background: var(--accent-4); }
+        .example-item:nth-child(5) .example-avatar { background: var(--accent-5); }
+
+        .example-content {
+            flex: 1;
+        }
+
+        .example-name {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-text {
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 0.9375rem;
+        }
+
+        .example-before, .example-after {
+            margin-bottom: 0.75rem;
+        }
+
+        .example-before strong {
+            color: #ef4444;
+        }
+
+        .example-after strong {
+            color: var(--accent-4);
+        }
+
+        /* 人物卡片 */
+        .person-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .person-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border-top: 4px solid var(--primary);
+        }
+
+        .person-card:nth-child(1) { border-top-color: var(--accent-1); }
+        .person-card:nth-child(2) { border-top-color: var(--accent-2); }
+        .person-card:nth-child(3) { border-top-color: var(--accent-3); }
+        .person-card:nth-child(4) { border-top-color: var(--accent-4); }
+        .person-card:nth-child(5) { border-top-color: var(--accent-5); }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .person-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .person-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .person-card:nth-child(1) .person-avatar { background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%); }
+        .person-card:nth-child(2) .person-avatar { background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent-3) 100%); }
+        .person-card:nth-child(3) .person-avatar { background: linear-gradient(135deg, var(--accent-3) 0%, var(--accent-4) 100%); }
+        .person-card:nth-child(4) .person-avatar { background: linear-gradient(135deg, var(--accent-4) 0%, var(--accent-5) 100%); }
+        .person-card:nth-child(5) .person-avatar { background: linear-gradient(135deg, var(--accent-5) 0%, var(--primary) 100%); }
+
+        .person-info h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .person-tag {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .keyword {
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-light);
+            border-radius: 16px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-mini {
+            text-align: center;
+        }
+
+        .stat-mini-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-mini-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* 人物详情模态框 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .modal-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* 关键转变节点 */
+        .milestone {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .milestone-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .milestone-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .milestone-title {
+            flex: 1;
+        }
+
+        .milestone-month {
+            font-size: 0.875rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .milestone-name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: 0.25rem;
+        }
+
+        .milestone-event {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .milestone-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .milestone-text {
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .before, .after {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .before {
+            border-left: 3px solid #ef4444;
+        }
+
+        .after {
+            border-left: 3px solid var(--accent-4);
+        }
+
+        .before .milestone-label {
+            color: #ef4444;
+        }
+
+        .after .milestone-label {
+            color: var(--accent-4);
+        }
+
+        /* 图表容器 */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-overlay {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                margin: 1rem auto;
+            }
+
+            .hero .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        /* 成长模型 */
+        .growth-model {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
+        }
+
+        .growth-stage {
+            flex: 1;
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .growth-stage:hover {
+            transform: translateY(-5px);
+        }
+
+        .growth-stage .stage-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            line-height: 40px;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .growth-stage h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .growth-stage p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .growth-model {
+                flex-direction: column;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container">
+            <div class="logo">巩固3期 · 成长结营</div>
+            <ul>
+                <li><a href="#overview">总览</a></li>
+                <li><a href="#commonality">共性成长</a></li>
+                <li><a href="#individuals">个人蜕变</a></li>
+                <li><a href="#data">数据看板</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section class="hero">
+        <div class="container">
+            <h1>蜕变之旅</h1>
+            <p class="subtitle">5个人 × 5个月 = 一场从"被动内耗"到"主动操盘"的系统进化</p>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">成长学员</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">天数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">46</div>
+                    <div class="stat-label">咨询次数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">完成率</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 总览 -->
+    <section id="overview">
+        <div class="container">
+            <div class="card">
+                <h2>📊 成长总览</h2>
+                <p style="color: var(--text-light); margin-bottom: 2rem;">
+                    从2025年9月至2026年1月，5位学员在各自的人生议题中，走过了一条相似而独特的成长路径。
+                    他们从不同的困境出发，却殊途同归地完成了同一个核心转变：<strong>从"被环境驱使的执行者"蜕变为"拥有自我系统的掌控者"</strong>。
+                </p>
+
+                <!-- 成长模型 -->
+                <h3>🔄 共同的四阶段成长模型</h3>
+                <div class="growth-model">
+                    <div class="growth-stage">
+                        <div class="stage-number">1</div>
+                        <h4>混乱觉醒期</h4>
+                        <p>压力、内耗、回避<br>识别问题根源</p>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="growth-stage">
+                        <div class="stage-number">2</div>
+                        <h4>动作探索期</h4>
+                        <p>尝试、验证、反馈<br>建立行动信心</p>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="growth-stage">
+                        <div class="stage-number">3</div>
+                        <h4>认知突破期</h4>
+                        <p>逻辑、框架、顿悟<br>形成思维模型</p>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="growth-stage">
+                        <div class="stage-number">4</div>
+                        <h4>系统整合期</h4>
+                        <p>主体性、边界、笃定<br>建立自我系统</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 成长曲线 -->
+            <div class="card">
+                <h3>📈 5人成长曲线对比</h3>
+                <div class="chart-container">
+                    <canvas id="growthChart"></canvas>
+                </div>
+                <p style="color: var(--text-light); font-size: 0.875rem; margin-top: 1rem;">
+                    * 纵轴代表"自我掌控感"（1-10分），横轴代表时间跨度（2025.9 - 2026.1）
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 共性成长 -->
+    <section id="commonality" style="background: white;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">🔗 共性成长：五个核心转变</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                尽管每个人的具体情境不同，但他们在底层逻辑上完成了相同的进化。<br>
+                <strong>点击展开查看5个人在同一维度的真实案例</strong>
+            </p>
+
+            <!-- 转变1：应该思维 → 事实思维 -->
+            <div class="transformation-card" onclick="toggleTransformation(this)">
+                <div class="transformation-header">
+                    <div class="transformation-title">
+                        <div class="transform-from">❌ 应该思维<br><small>领导应该、工作应该、我应该</small></div>
+                        <span class="transform-arrow">→</span>
+                        <div class="transform-to">✅ 事实思维<br><small>看客观事实、理解因果、接纳现状</small></div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="transformation-content">
+                    <div class="transformation-examples">
+                        <div class="example-item">
+                            <div class="example-avatar">黄龙隆</div>
+                            <div class="example-content">
+                                <div class="example-name">黄龙隆 · 关系重构者</div>
+                                <div class="example-before"><strong>认知前：</strong>觉得前女友、同事对自己不公，陷入"受害者心态"</div>
+                                <div class="example-after"><strong>认知后：</strong>理解他人的行为模式和局限性，从"为什么Ta这样对我"转变为"Ta的系统逻辑是什么"</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">雨馨</div>
+                            <div class="example-content">
+                                <div class="example-name">雨馨 · 自我关照者</div>
+                                <div class="example-before"><strong>认知前：</strong>觉得"应该"有完美的复盘、完美的执行，导致行动瘫痪</div>
+                                <div class="example-after"><strong>认知后：</strong>接受"Landing期客观需要2-3个月"的事实，允许自己不完美也在成长</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">华青怡</div>
+                            <div class="example-content">
+                                <div class="example-name">华青怡 · 课题分离者</div>
+                                <div class="example-before"><strong>认知前：</strong>认为"我应该修复家庭情绪"，必须让所有人都好起来</div>
+                                <div class="example-after"><strong>认知后：</strong>理解了长辈因时代背景（饥荒经历）形成的独特消费观和医疗观，不再用自己的标准去要求</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">NeeNee</div>
+                            <div class="example-content">
+                                <div class="example-name">NeeNee · 主体回归者</div>
+                                <div class="example-before"><strong>认知前：</strong>认为"伴侣应该更上进、更强"，用强弱标准评估关系</div>
+                                <div class="example-after"><strong>认知后：</strong>理解男性在社会文化下的压力模式和思维惯性，不再单纯要求而是用影响力支持</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">鲨鱼</div>
+                            <div class="example-content">
+                                <div class="example-name">鲨鱼 · 框架建立者</div>
+                                <div class="example-before"><strong>认知前：</strong>觉得"工作应该轻松、领导应该给明确指令"，陷入抱怨和焦虑</div>
+                                <div class="example-after"><strong>认知后：</strong>理解新部门客观需要适应期，不同领导有不同管理方式，这是系统特点而非针对个人</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 转变2：目标/情绪驱动 → 需求驱动 -->
+            <div class="transformation-card" onclick="toggleTransformation(this)">
+                <div class="transformation-header">
+                    <div class="transformation-title">
+                        <div class="transform-from">❌ 目标/情绪驱动<br><small>为了KPI、为了证明、被焦虑推动</small></div>
+                        <span class="transform-arrow">→</span>
+                        <div class="transform-to">✅ 需求驱动<br><small>我真正需要什么、当下如何滋养自己</small></div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="transformation-content">
+                    <div class="transformation-examples">
+                        <div class="example-item">
+                            <div class="example-avatar">黄龙隆</div>
+                            <div class="example-content">
+                                <div class="example-name">黄龙隆 · 关系重构者</div>
+                                <div class="example-before"><strong>认知前：</strong>陷入"假性躺平"，通过"摸鱼"和报复性娱乐来应对压力，但内心空虚</div>
+                                <div class="example-after"><strong>认知后：</strong>意识到自己真正需要的是"心力恢复"，开始用月度总结、写长文等方式建立正向回路</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">雨馨</div>
+                            <div class="example-content">
+                                <div class="example-name">雨馨 · 自我关照者</div>
+                                <div class="example-before"><strong>认知前：</strong>用"意志力"强迫自己学习，陷入"平稳投入-刺激放纵"的钟摆模式</div>
+                                <div class="example-after"><strong>认知后：</strong>做蜂蜜柚子茶时体验到纯粹愉悦，理解了什么是"滋养"而非"消耗"，低精力时允许自己休息</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">华青怡</div>
+                            <div class="example-content">
+                                <div class="example-name">华青怡 · 课题分离者</div>
+                                <div class="example-before"><strong>认知前：</strong>连水果都舍不得花时间吃，把所有精力用在"解决家人问题"上</div>
+                                <div class="example-after"><strong>认知后：</strong>开始花8块钱买水果并在风景中享用，学会了"自我关照"，建立了充电的仪式感</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">NeeNee</div>
+                            <div class="example-content">
+                                <div class="example-name">NeeNee · 主体回归者</div>
+                                <div class="example-before"><strong>认知前：</strong>脑子转得太快无法休息，为了工作目标牺牲睡眠质量</div>
+                                <div class="example-after"><strong>认知后：</strong>开始练习"心脑平衡"，通过五感体验（洗澡、摸小动物）从逻辑脑切换到感知脑，恢复能量</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">鲨鱼</div>
+                            <div class="example-content">
+                                <div class="example-name">鲨鱼 · 框架建立者</div>
+                                <div class="example-before"><strong>认知前：</strong>因为想"跟项目"而进入高压部门，完全没有自己的生活时间</div>
+                                <div class="example-after"><strong>认知后：</strong>意识到自己真正需要的是"专业指导"而非单纯的项目，做出换部门决策，满足真实需求</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 转变3：被动执行 → 主动操盘 -->
+            <div class="transformation-card" onclick="toggleTransformation(this)">
+                <div class="transformation-header">
+                    <div class="transformation-title">
+                        <div class="transform-from">❌ 被动执行者<br><small>等待指令、满足期待、受害者心态</small></div>
+                        <span class="transform-arrow">→</span>
+                        <div class="transform-to">✅ 主动操盘手<br><small>识别需求、做出决策、掌控局面</small></div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="transformation-content">
+                    <div class="transformation-examples">
+                        <div class="example-item">
+                            <div class="example-avatar">黄龙隆</div>
+                            <div class="example-content">
+                                <div class="example-name">黄龙隆 · 关系重构者</div>
+                                <div class="example-before"><strong>认知前：</strong>被领导指令推动，只会通过单次动作（如撒谎拒绝）来应对</div>
+                                <div class="example-after"><strong>认知后：</strong>主动组织同学十周年聚会，调用过往成功经验，不再陷入对未知的恐惧联想</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">雨馨</div>
+                            <div class="example-content">
+                                <div class="example-name">雨馨 · 自我关照者</div>
+                                <div class="example-before"><strong>认知前：</strong>备考初期渴望有"老师"手把手教，等待标准答案</div>
+                                <div class="example-after"><strong>认知后：</strong>主动问同事备考经验、利用AI工具辅助解决具体问题，掌握了主动权</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">华青怡</div>
+                            <div class="example-content">
+                                <div class="example-name">华青怡 · 课题分离者</div>
+                                <div class="example-before"><strong>认知前：</strong>活在猜想里，害怕演砸、害怕被拒绝，回避所有不确定的事</div>
+                                <div class="example-after"><strong>认知后：</strong>在"海王"事件中主动向第三方求证，确认真相后通过写日记祛魅，实现知行合一</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">NeeNee</div>
+                            <div class="example-content">
+                                <div class="example-name">NeeNee · 主体回归者</div>
+                                <div class="example-before"><strong>认知前：</strong>陷入"找达人、改稿"的重复执行，等待公司或同事投喂信息</div>
+                                <div class="example-after"><strong>认知后：</strong>在投流业务遇到瓶颈时，主动利用AI（DeepSeek）梳理逻辑、解决问题，完全突破路径依赖</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">鲨鱼</div>
+                            <div class="example-content">
+                                <div class="example-name">鲨鱼 · 框架建立者</div>
+                                <div class="example-before"><strong>认知前：</strong>唯唯诺诺，被工作填满，不敢表达自己的想法</div>
+                                <div class="example-after"><strong>认知后：</strong>开始主动提出自己的思路和想法，建立与领导的沟通机制（每周2次同步优先级）</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 转变4：防御性边界 → 共赢性边界 -->
+            <div class="transformation-card" onclick="toggleTransformation(this)">
+                <div class="transformation-header">
+                    <div class="transformation-title">
+                        <div class="transform-from">❌ 防御性边界<br><small>我很忙别理我、筑墙阻断连接</small></div>
+                        <span class="transform-arrow">→</span>
+                        <div class="transform-to">✅ 共赢性边界<br><small>说明需求和排序、保持流动连接</small></div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="transformation-content">
+                    <div class="transformation-examples">
+                        <div class="example-item">
+                            <div class="example-avatar">黄龙隆</div>
+                            <div class="example-content">
+                                <div class="example-name">黄龙隆 · 关系重构者</div>
+                                <div class="example-before"><strong>认知前：</strong>边界是一堵"墙"，用于自我保护，完全阻断与外界的能量流动</div>
+                                <div class="example-after"><strong>认知后：</strong>在外包弄坏灯的事件中，不仅要修好灯，还要维持后续合作意愿，基于"双方需求"完美解决</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">雨馨</div>
+                            <div class="example-content">
+                                <div class="example-name">雨馨 · 自我关照者</div>
+                                <div class="example-before"><strong>认知前：</strong>害怕被拒绝，不敢主动交流，把自己封闭起来</div>
+                                <div class="example-after"><strong>认知后：</strong>主动问同事备考经验，理解了即使是批评或拒绝，背后也可能包含对方的需求，而非针对个人</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">华青怡</div>
+                            <div class="example-content">
+                                <div class="example-name">华青怡 · 课题分离者</div>
+                                <div class="example-before"><strong>认知前：</strong>台风天面对母亲要求回家，陷入"顺从or对抗"的二元对立</div>
+                                <div class="example-after"><strong>认知后：</strong>识别母亲背后的关心需求，坚定拒绝的同时给予情感回应，获得"不顺从也没关系"的正向反馈</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">NeeNee</div>
+                            <div class="example-content">
+                                <div class="example-name">NeeNee · 主体回归者</div>
+                                <div class="example-before"><strong>认知前：</strong>对伴侣有强烈控制欲，要求透明、查岗，用控制来获取确定性</div>
+                                <div class="example-after"><strong>认知后：</strong>区分"形式需求"（要透明）和"实质需求"（建立信任），开始用影响力支持伴侣而非要求</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">鲨鱼</div>
+                            <div class="example-content">
+                                <div class="example-name">鲨鱼 · 框架建立者</div>
+                                <div class="example-before"><strong>认知前：</strong>完全被工作填满，没有边界感，也不敢表达</div>
+                                <div class="example-after"><strong>认知后：</strong>建立沟通机制，每周至少2次与领导同步工作优先级，说明自己的排序和需求</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 转变5：情绪阻力 → 系统思维 -->
+            <div class="transformation-card" onclick="toggleTransformation(this)">
+                <div class="transformation-header">
+                    <div class="transformation-title">
+                        <div class="transform-from">❌ 情绪阻力<br><small>陷入焦虑、自我攻击、内耗循环</small></div>
+                        <span class="transform-arrow">→</span>
+                        <div class="transform-to">✅ 系统思维<br><small>拆解问题、看见逻辑、理解系统</small></div>
+                    </div>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="transformation-content">
+                    <div class="transformation-examples">
+                        <div class="example-item">
+                            <div class="example-avatar">黄龙隆</div>
+                            <div class="example-content">
+                                <div class="example-name">黄龙隆 · 关系重构者</div>
+                                <div class="example-before"><strong>认知前：</strong>陷入"逻辑断点"，只能通过情绪反应（如撒谎拒绝）来应对压力</div>
+                                <div class="example-after"><strong>认知后：</strong>开始使用"脑图"作为思考工具，将混乱的念头结构化，用系统视角拆解压力源</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">雨馨</div>
+                            <div class="example-content">
+                                <div class="example-name">雨馨 · 自我关照者</div>
+                                <div class="example-before"><strong>认知前：</strong>面对陌生任务产生畏难情绪，卡在"不知道怎么做"的模糊感中</div>
+                                <div class="example-after"><strong>认知后：</strong>引入"归纳、类比、分类"的逻辑思维工具，将模糊的大困难拆解为具体的小步骤</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">华青怡</div>
+                            <div class="example-content">
+                                <div class="example-name">华青怡 · 课题分离者</div>
+                                <div class="example-before"><strong>认知前：</strong>身体出现无意识流泪、肠胃炎等躯体化反应，被情绪淹没</div>
+                                <div class="example-after"><strong>认知后：</strong>在"海王"事件中主动验证+写日记祛魅，形成"觉察-验证-记录"的系统化应对</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">NeeNee</div>
+                            <div class="example-content">
+                                <div class="example-name">NeeNee · 主体回归者</div>
+                                <div class="example-before"><strong>认知前：</strong>因伴侣"不够强"而产生控制欲焦虑，陷入情绪内耗</div>
+                                <div class="example-after"><strong>认知后：</strong>理解了伴侣行为背后的因果链条（社会文化、原生家庭），从指责转向理解</div>
+                            </div>
+                        </div>
+                        <div class="example-item">
+                            <div class="example-avatar">鲨鱼</div>
+                            <div class="example-content">
+                                <div class="example-name">鲨鱼 · 框架建立者</div>
+                                <div class="example-before"><strong>认知前：</strong>陷入细节无法自拔，看到很多"烂"的地方就焦虑和抱怨</div>
+                                <div class="example-after"><strong>认知后：</strong>学会"框架思维"，理解了大框架下的"烂"可能是合理的选择，先看框架再看细节</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 个人蜕变 -->
+    <section id="individuals">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">👥 个人蜕变地图</h2>
+            <p style="text-align: center; color: var(--text-light); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                每个人都有独特的成长路径和关键转变节点。<br>
+                <strong>点击卡片查看详细的成长案例</strong>
+            </p>
+
+            <div class="person-grid">
+                <!-- 黄龙隆 -->
+                <div class="person-card" onclick="showPersonDetail('azheng')">
+                    <div class="person-header">
+                        <div class="person-avatar">黄龙隆</div>
+                        <div class="person-info">
+                            <h3>黄龙隆</h3>
+                            <div class="person-tag">关系重构者</div>
+                        </div>
+                    </div>
+                    <div class="keywords">
+                        <span class="keyword">边界建立</span>
+                        <span class="keyword">压力拆解</span>
+                        <span class="keyword">脑图工具</span>
+                        <span class="keyword">系统视角</span>
+                    </div>
+                    <div class="stats-summary">
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">12</div>
+                            <div class="stat-mini-label">咨询次数</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">5</div>
+                            <div class="stat-mini-label">关键节点</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">2→9</div>
+                            <div class="stat-mini-label">掌控感</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 雨馨 -->
+                <div class="person-card" onclick="showPersonDetail('lulu')">
+                    <div class="person-header">
+                        <div class="person-avatar">雨馨</div>
+                        <div class="person-info">
+                            <h3>雨馨</h3>
+                            <div class="person-tag">自我关照者</div>
+                        </div>
+                    </div>
+                    <div class="keywords">
+                        <span class="keyword">精力管理</span>
+                        <span class="keyword">需求驱动</span>
+                        <span class="keyword">逻辑思维</span>
+                        <span class="keyword">社会价值</span>
+                    </div>
+                    <div class="stats-summary">
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">12</div>
+                            <div class="stat-mini-label">咨询次数</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">5</div>
+                            <div class="stat-mini-label">关键节点</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">3→8</div>
+                            <div class="stat-mini-label">掌控感</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 华青怡 -->
+                <div class="person-card" onclick="showPersonDetail('xiaonan')">
+                    <div class="person-header">
+                        <div class="person-avatar">华青怡</div>
+                        <div class="person-info">
+                            <h3>华青怡</h3>
+                            <div class="person-tag">课题分离者</div>
+                        </div>
+                    </div>
+                    <div class="keywords">
+                        <span class="keyword">财务祛魅</span>
+                        <span class="keyword">边界划分</span>
+                        <span class="keyword">主动验证</span>
+                        <span class="keyword">稳定内核</span>
+                    </div>
+                    <div class="stats-summary">
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">7</div>
+                            <div class="stat-mini-label">咨询次数</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">5</div>
+                            <div class="stat-mini-label">关键节点</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">1→8</div>
+                            <div class="stat-mini-label">掌控感</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NeeNee -->
+                <div class="person-card" onclick="showPersonDetail('yanling')">
+                    <div class="person-header">
+                        <div class="person-avatar">NeeNee</div>
+                        <div class="person-info">
+                            <h3>NeeNee</h3>
+                            <div class="person-tag">主体回归者</div>
+                        </div>
+                    </div>
+                    <div class="keywords">
+                        <span class="keyword">心脑平衡</span>
+                        <span class="keyword">信解行证</span>
+                        <span class="keyword">主体性</span>
+                        <span class="keyword">破局能力</span>
+                    </div>
+                    <div class="stats-summary">
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">12</div>
+                            <div class="stat-mini-label">咨询次数</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">5</div>
+                            <div class="stat-mini-label">关键节点</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">2→9</div>
+                            <div class="stat-mini-label">掌控感</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 鲨鱼 -->
+                <div class="person-card" onclick="showPersonDetail('xiaoyu')">
+                    <div class="person-header">
+                        <div class="person-avatar">鲨鱼</div>
+                        <div class="person-info">
+                            <h3>鲨鱼</h3>
+                            <div class="person-tag">框架建立者</div>
+                        </div>
+                    </div>
+                    <div class="keywords">
+                        <span class="keyword">工作适应</span>
+                        <span class="keyword">洞察方法论</span>
+                        <span class="keyword">框架思维</span>
+                        <span class="keyword">管理升维</span>
+                    </div>
+                    <div class="stats-summary">
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">10</div>
+                            <div class="stat-mini-label">咨询次数</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">5</div>
+                            <div class="stat-mini-label">关键节点</div>
+                        </div>
+                        <div class="stat-mini">
+                            <div class="stat-mini-value">2→9</div>
+                            <div class="stat-mini-label">掌控感</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据看板 -->
+    <section id="data" style="background: white;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem;">📊 成长数据看板</h2>
+
+            <div class="card">
+                <h3>🎯 核心能力提升对比</h3>
+                <div class="chart-container">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+                <p style="color: var(--text-light); font-size: 0.875rem; margin-top: 1rem;">
+                    * 雷达图展示5人在6个核心能力维度的提升水平（1-10分）
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 结尾 -->
+    <section style="background: var(--bg-dark); color: white; text-align: center; padding: 4rem 0;">
+        <div class="container">
+            <h2 style="margin-bottom: 1rem; color: white;">🌟 成长永不止步</h2>
+            <p style="color: #94a3b8; font-size: 1.125rem; max-width: 800px; margin: 0 auto 2rem;">
+                这不是终点，而是一个新的起点。<br>
+                每个人都已经建立了自己的成长系统，接下来的路，会更加笃定和从容。
+            </p>
+            <p style="color: #64748b; font-size: 0.875rem;">
+                巩固3期 · 2025.09 - 2026.01 · 5人成长记录
+            </p>
+        </div>
+    </section>
+
+    <!-- 人物详情模态框 -->
+    <div class="modal-overlay" id="personModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <div class="modal-avatar" id="modalAvatar">黄龙隆</div>
+                    <div>
+                        <h2 id="modalName">黄龙隆</h2>
+                        <p id="modalTag" style="color: var(--text-light); margin: 0;">关系重构者</p>
+                    </div>
+                </div>
+                <button class="close-modal" onclick="closePersonDetail()">×</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 动态内容 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 成长曲线图
+        const growthCtx = document.getElementById('growthChart').getContext('2d');
+        new Chart(growthCtx, {
+            type: 'line',
+            data: {
+                labels: ['9月初', '9月底', '10月', '11月', '12月', '1月'],
+                datasets: [
+                    {
+                        label: '黄龙隆',
+                        data: [2, 3, 4, 6, 7, 9],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: '雨馨',
+                        data: [3, 3, 5, 6, 7, 8],
+                        borderColor: '#ec4899',
+                        backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: '华青怡',
+                        data: [1, 2, 4, 5, 7, 8],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'NeeNee',
+                        data: [2, 4, 5, 6, 7, 9],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: '鲨鱼',
+                        data: [2, 3, 4, 6, 8, 9],
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: {
+                            display: true,
+                            text: '自我掌控感 (1-10)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // 技能雷达图
+        const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+        new Chart(skillsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['情绪觉察', '需求识别', '逻辑思维', '边界建立', '行动力', '系统视角'],
+                datasets: [
+                    {
+                        label: '黄龙隆',
+                        data: [8, 7, 9, 9, 8, 9],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)'
+                    },
+                    {
+                        label: '雨馨',
+                        data: [9, 9, 8, 7, 8, 8],
+                        borderColor: '#ec4899',
+                        backgroundColor: 'rgba(236, 72, 153, 0.2)'
+                    },
+                    {
+                        label: '华青怡',
+                        data: [9, 8, 7, 9, 7, 8],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.2)'
+                    },
+                    {
+                        label: 'NeeNee',
+                        data: [8, 9, 9, 8, 9, 9],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)'
+                    },
+                    {
+                        label: '鲨鱼',
+                        data: [8, 8, 9, 8, 9, 9],
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.2)'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+
+        // 展开/收起转变卡片
+        function toggleTransformation(element) {
+            element.classList.toggle('expanded');
+        }
+
+        // 人物详情数据
+        const personData = {
+            azheng: {
+                name: '黄龙隆',
+                tag: '关系重构者',
+                color: '#8b5cf6',
+                milestones: [
+                    {
+                        month: '2025年5月',
+                        title: '识别讨好型人格',
+                        event: '帮助同事识别了PUA，但自己仍深陷"逻辑断点"中',
+                        before: '将领导视为"老师/上位者"，不敢划清边界，无法看清自身价值',
+                        after: '开始意识到自己处于"讨好型人格"状态，虽然帮助了别人，但自己还没找到系统性解决方案',
+                        action: '通过单次动作（如撒谎拒绝）来应对，但缺乏系统性'
+                    },
+                    {
+                        month: '2025年9月',
+                        title: '从假性躺平到觉察需求',
+                        event: '通过降低工作标准（"摸鱼"）和依赖生存红利来缓解痛苦',
+                        before: '陷入"假性躺平"，用报复性娱乐麻痹自己，导致"生存需求"与"发展需求"割裂',
+                        after: '意识到"划清边界≠冷漠"，但此时的边界更多是防御性的',
+                        action: '开始思考"主线"，虽然感到模糊和宏大，但已经有了探索的意识'
+                    },
+                    {
+                        month: '2025年11月',
+                        title: '工具落地：脑图思考',
+                        event: '尝试利用AI进行认知探索，并写长文（重疾险分析）',
+                        before: '心力开始恢复，但从"报复性娱乐"中走出后产生"无所事事"的空虚感',
+                        after: '开始使用"脑图"作为思考工具，将混乱的念头结构化',
+                        action: '虽然长文中途搁置，但实现了"从0到1"的启动；理解了"事业是脑中建立正向回路"的生理机制'
+                    },
+                    {
+                        month: '2025年12月',
+                        title: '关系视角转换',
+                        event: '在社群（八卦群）进行分享，获得正向的外部反馈',
+                        before: '从"受害者心态"看待前女友、同事，觉得他们对自己不公',
+                        after: '转变为"系统视角"，理解他人的行为模式和局限性',
+                        action: '学会了"夸夸自己"，用善意包裹自己，从而降低对他人的防御；体验到了"良性交互"的可能性'
+                    },
+                    {
+                        month: '2026年1月',
+                        title: '实战验证：外包事故处理',
+                        event: '外包队弄坏灯，需要解决问题并维持合作关系',
+                        before: '陷入"强弱对立"思维（我是甲方我该死，或者你是乙方你该死）',
+                        after: '基于"双方需求"（不仅要修好灯，还要维持后续合作意愿）完美解决了问题',
+                        action: '人际边界从"防御性边界"（我很忙别理我）升级为"共赢性边界"（说明我的排序和需求，给予对方空间）'
+                    }
+                ]
+            },
+            lulu: {
+                name: '雨馨',
+                tag: '自我关照者',
+                color: '#ec4899',
+                milestones: [
+                    {
+                        month: '2025年9月',
+                        title: '打破"害怕被拒绝"',
+                        event: '想问同事备考经验，但害怕被拒绝',
+                        before: '对人际沟通存在"害怕被拒绝"的防御，试图通过深挖一个问题来一次性解决未来所有问题',
+                        after: '意识到"害怕被拒绝"是源于对自己的不自信，通过实际行动（问同事）打破了恐惧',
+                        action: '从追求完美的"SOP"转向接受"动态调整"；意识到备考不仅是考试，更是"修炼自己"的场域'
+                    },
+                    {
+                        month: '2025年10月',
+                        title: '蜂蜜柚子茶的顿悟',
+                        event: '做蜂蜜柚子茶时体验到纯粹愉悦',
+                        before: '陷入"压力状态"，表现为拖延、刷手机、熬夜，试图用"意志力"对抗低精力，导致崩盘',
+                        after: '理解了什么是"滋养"而非"消耗"，从"目标驱动"转向"需求驱动"',
+                        action: '学会区分"高精力"与"低精力"状态；低精力时允许自己休息（如睡觉、发呆），不再强迫执行计划'
+                    },
+                    {
+                        month: '2025年11月',
+                        title: '逻辑工具破解畏难',
+                        event: '面对陌生任务（如申论、新题型）产生畏难情绪',
+                        before: '习惯性产生畏难情绪，卡在"不知道怎么做"的模糊感中',
+                        after: '引入"归纳、类比、分类"的逻辑思维工具，将模糊的大困难拆解为具体的小步骤',
+                        action: '遇到困难时，不再单纯宣泄情绪，而是尝试寻找"相似案例"或"拆解步骤"，客观度显著提升'
+                    },
+                    {
+                        month: '2025年12月',
+                        title: '感恩日记与自我接纳',
+                        event: '年底大会极度忙碌，身体出现疲惫信号',
+                        before: '梦境反映出深层的"被评价焦虑"；觉得"只能靠自己"，陷入孤岛心态',
+                        after: '开始写"感恩日记"，记录他人对自己的支持，打破孤岛心态',
+                        action: '在极度忙碌中，依然能保持最低限度的备考（每日30分钟），即使不完美也自我接纳'
+                    },
+                    {
+                        month: '2026年1月',
+                        title: '连接社会价值视野',
+                        event: '因同事（管培生）能上班备考而感到不公',
+                        before: '陷入与同事的盲目比较，产生内耗；对体制内工作只关注福利待遇',
+                        after: '通过分析客观背景差异，放下了比较；开始思考公务员岗位的社会价值',
+                        action: '从关注"眼前利益/个人得失"拓展到"行业价值/社会分工"；转"怨气"为"资源视角"'
+                    }
+                ]
+            },
+            xiaonan: {
+                name: '华青怡',
+                tag: '课题分离者',
+                color: '#f59e0b',
+                milestones: [
+                    {
+                        month: '2025年9月初',
+                        title: '财务祛魅：10个月安全期',
+                        event: '极度回避找工作，陷入生存焦虑',
+                        before: '处于极度回避找工作、心力枯竭的状态，只有睡觉能回血，身体出现无意识流泪、肠胃炎等躯体化反应',
+                        after: '通过计算存款和深圳生活成本，确认自己有10个月的"生存安全期"，打破了模糊的生存焦虑',
+                        action: '开始尝试"心力回补"动作，如打八段锦、花8块钱买水果并在风景中享用，建立"照顾自己"的意识'
+                    },
+                    {
+                        month: '2025年9月底',
+                        title: '台风天拒绝母亲',
+                        event: '台风天母亲要求回家，面临顺从or对抗的选择',
+                        before: '深受原生家庭"321不许哭"的模式影响，习惯压抑感受，面对母亲的要求不知如何应对',
+                        after: '成功识别母亲背后的关心需求并坚定拒绝，获得了第一次"不顺从也没关系"的正向反馈',
+                        action: '首立边界：在保持情感连接的同时，坚定地维护了自己的需求'
+                    },
+                    {
+                        month: '2025年10月',
+                        title: '主动验证："海王"事件',
+                        event: '遇到"奇怪网友"，对方行为让人困惑',
+                        before: '陷入"基于完美主义的回避性表演"，害怕演砸，容易对他人的沉默产生巨大的猜想和自我攻击',
+                        after: '突破了以往的内耗模式，主动向第三方求证，确认对方是海王',
+                        action: '通过写日记祛魅，实现了知行合一的爽感；开始能识别自己的"心理防御机制"'
+                    },
+                    {
+                        month: '2025年11月',
+                        title: '理解长辈的时代背景',
+                        event: '全家人（爷爷、奶奶、父母）同时生病',
+                        before: '面临"必须修复家庭情绪"的旧有执念冲击，觉得长辈的做法（如爷爷拒绝手术）不合理',
+                        after: '理解了长辈因时代背景（如饥荒经历）形成的独特消费观和医疗观，不再强行用自己的标准去愤怒或要求',
+                        action: '意识到家人的压力有其自身的因果链条，并非全是自己的责任，开始尝试将"家人的情绪"与"自己的状态"做切割'
+                    },
+                    {
+                        month: '2025年12月',
+                        title: '从执行者到观察者',
+                        event: '家庭系统持续不稳定，自己如何定位',
+                        before: '试图解决一切，把自己当成"执行者"，觉得所有人的问题都需要自己来解决',
+                        after: '从"执行者"向"观察者"转型，意识到在不稳定的家庭系统中，自己保持"稳定"（像山一样）就是最大的支持',
+                        action: '确立了"自我关怀的正当性"，明白只有自己这个"星球"自转起来，才能产生能量去支持他人'
+                    }
+                ]
+            },
+            yanling: {
+                name: 'NeeNee',
+                tag: '主体回归者',
+                color: '#10b981',
+                milestones: [
+                    {
+                        month: '2025年9月',
+                        title: '识别"工具人感"死循环',
+                        event: '陷入"找达人、改稿"的重复执行中',
+                        before: '感到疲惫且无价值感，认为工作只是完成KPI，陷入被动内耗的执行者角色',
+                        after: '识别出自己缺乏"行业全局信息"，意识到不能只做螺丝钉，需要建立核心价值',
+                        action: '开始思考如何积累优质达人库、理解品牌方需求，从单纯执行转向策略思考'
+                    },
+                    {
+                        month: '2025年10月',
+                        title: '脑图获得正反馈',
+                        event: '在工作中写出超越同龄人深度的脑图',
+                        before: '不再空想，开始行动。主动联系旅游领队做小红书引流咨询；尝试写简历投递字节跳动',
+                        after: '洞察出"共性"逻辑，获得了从"被动执行"到"创造价值"的巨大正反馈',
+                        action: '提炼出"用户旅程"的方法论，明确了职业核心需求是"强转化能力验证"'
+                    },
+                    {
+                        month: '2025年11月',
+                        title: '心脑平衡练习',
+                        event: '发现自己脑子转得太快，无法休息，睡眠质量差',
+                        before: '脑力活动过度，导致做梦多、睡眠质量差，无法恢复能量',
+                        after: '开始练习"心脑平衡"，学习从逻辑脑（处理信息）切换到感知脑（感受当下、连接环境）',
+                        action: '尝试通过五感体验（如洗澡、摸小动物）来恢复能量，建立了新的能量管理方式'
+                    },
+                    {
+                        month: '2025年12月',
+                        title: '理解伴侣的系统视角',
+                        event: '面对伴侣的"不够强"，产生焦虑和控制欲',
+                        before: '极度缺乏安全感，对伴侣有强烈的控制欲（要求透明、查岗），用"控制"来获取确定性',
+                        after: '不再单纯用"强弱"标准要求伴侣，理解男性在社会文化下的压力模式和思维惯性',
+                        action: '边界打开，不再因为同事不专业而单纯生气，而是理解同事的防御机制，用更丝滑的方式达成合作'
+                    },
+                    {
+                        month: '2026年1月',
+                        title: '主体性回归与AI破局',
+                        event: '做出"6月租房到期后回厦门验证"的决定',
+                        before: '长期摇摆于"要不要回厦门"，把在深圳的日子当成"忍受"的过渡期',
+                        after: '做出明确决定，消除"过渡态"，开始享受独处，建立与当下环境的真实连接',
+                        action: '在投流业务遇到瓶颈时，主动利用AI（DeepSeek）梳理逻辑、解决问题，实现了完全的"路径依赖"突破，形成"信解行证"闭环'
+                    }
+                ]
+            },
+            xiaoyu: {
+                name: '鲨鱼',
+                tag: '框架建立者',
+                color: '#06b6d4',
+                milestones: [
+                    {
+                        month: '2025年9月',
+                        title: 'Landing期的合理焦虑',
+                        event: '刚换岗到新部门，工作量暴增',
+                        before: '工作量暴增至之前的3倍，完全没有自己的生活时间，处于高压状态，完全被工作填满',
+                        after: '意识到"Landing需要时间"，新岗位适应需要2-3个月，这是客观规律，不是自己能力不行',
+                        action: '同事反馈表达比以前更有活力、更有章法；开始意识到生活节奏被打破需要重建'
+                    },
+                    {
+                        month: '2025年10月',
+                        title: '理解领导风格',
+                        event: '面对新领导"抛问题"的管理方式感到困惑',
+                        before: '领导总是反问而不给答案，只给大方向，具体怎么做要自己探索，感到迷茫',
+                        after: '理解了自主权的代价：有自主权意味着要自己探索方法；组织复杂性：新部门，不只是自己在学习，领导也在学习',
+                        action: '开始主动思考"领导为什么这样做"，意识到要观察、学习、询问的完整学习过程'
+                    },
+                    {
+                        month: '2025年11月',
+                        title: '洞察-需求-规划方法论',
+                        event: '开始质疑"跟项目"是否真的是自己的需求',
+                        before: '想要平稳生活，却冲向更有挑战的环境；习惯性负责任到牺牲自己；总是储备未来，忽略当下',
+                        after: '洞察了市场调研逻辑：洞察（过去）→ 需求（当下）→ 规划（未来），不能跳过前两步直接规划未来',
+                        action: '需求是动态的，不存在一劳永逸的选择；工作就是生活的一部分，不应二元对立'
+                    },
+                    {
+                        month: '2025年12月',
+                        title: '换部门的笃定决策',
+                        event: '做出从A部门换到B部门的决定',
+                        before: '执着于"一定要躺平"或"一定要进步"，陷入二元对立',
+                        after: '放下二元对立，看清客观事实：A部门满足跟项目和情绪价值，但缺专业指导；B部门满足跟项目和专业指导',
+                        action: '满足了"依靠感"需求，专业指导比情绪价值更重要；理解了"以自己为中心"不等于自私'
+                    },
+                    {
+                        month: '2026年1月',
+                        title: '从细节到框架的升维',
+                        event: '开始学习"框架思维"和管理思维',
+                        before: '陷入细节，无穷无尽；不知道框架时，很多事看起来很烂',
+                        after: '先看框架，有托底有罩子；框架下的"烂"可能是合理的选择',
+                        action: '意识到管理不只是做事，而是"管人"；从doing到managing的转变；能够主动提出自己的思路和想法'
+                    }
+                ]
+            }
+        };
+
+        // 显示人物详情
+        function showPersonDetail(person) {
+            const data = personData[person];
+            const modal = document.getElementById('personModal');
+            const modalAvatar = document.getElementById('modalAvatar');
+            const modalName = document.getElementById('modalName');
+            const modalTag = document.getElementById('modalTag');
+            const modalBody = document.getElementById('modalBody');
+
+            modalAvatar.textContent = data.name;
+            modalAvatar.style.background = data.color;
+            modalName.textContent = data.name;
+            modalTag.textContent = data.tag;
+
+            let milestonesHTML = '';
+            data.milestones.forEach((milestone, index) => {
+                milestonesHTML += `
+                    <div class="milestone">
+                        <div class="milestone-header">
+                            <div class="milestone-number" style="background: ${data.color}">${index + 1}</div>
+                            <div class="milestone-title">
+                                <div class="milestone-month">${milestone.month}</div>
+                                <div class="milestone-name">${milestone.title}</div>
+                            </div>
+                        </div>
+                        <div class="milestone-event">
+                            <div class="milestone-label">关键事件</div>
+                            <div class="milestone-text">${milestone.event}</div>
+                        </div>
+                        <div class="before-after">
+                            <div class="before">
+                                <div class="milestone-label">认知前</div>
+                                <div class="milestone-text">${milestone.before}</div>
+                            </div>
+                            <div class="after">
+                                <div class="milestone-label">认知后</div>
+                                <div class="milestone-text">${milestone.after}</div>
+                            </div>
+                        </div>
+                        <div class="milestone-event">
+                            <div class="milestone-label">行动验证</div>
+                            <div class="milestone-text">${milestone.action}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            modalBody.innerHTML = milestonesHTML;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // 关闭人物详情
+        function closePersonDetail() {
+            const modal = document.getElementById('personModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击遮罩层关闭
+        document.getElementById('personModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePersonDetail();
+            }
+        });
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
