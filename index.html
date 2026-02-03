@@ -23,43 +23,44 @@
         }
         .container {
             text-align: center;
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
         }
         .header {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
         .logo {
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 15px;
             color: #2a5298;
         }
         h1 {
             color: #1e3c72;
             margin-bottom: 10px;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
         }
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #666;
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
             line-height: 1.6;
         }
-        /* 核心：双入口卡片容器 */
+        /* 核心：三入口卡片容器 */
         .portal-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 30px;
-            margin: 40px 0;
+            margin: 50px 0;
         }
         .portal-card {
             background: white;
             border-radius: 16px;
             padding: 40px 30px;
             width: 100%;
-            max-width: 450px;
+            max-width: 350px; /* 调整为适合三列的宽度 */
+            min-height: 380px; /* 给卡片一个统一的最小高度 */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
@@ -70,33 +71,32 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         }
         .card-icon {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             margin-bottom: 20px;
         }
         .card-title {
             color: #1e3c72;
             margin-bottom: 15px;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
         }
         .card-desc {
             color: #555;
             line-height: 1.7;
             margin-bottom: 30px;
-            flex-grow: 1;
+            flex-grow: 1; /* 让描述部分占据可变空间，使按钮底部对齐 */
         }
         .card-button {
             display: inline-block;
-            padding: 16px 35px;
+            padding: 15px 30px;
             background: linear-gradient(to right, #4776E6, #8E54E9);
             color: white;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
-            margin-top: auto;
         }
         .card-button:hover {
             box-shadow: 0 7px 20px rgba(142, 84, 233, 0.4);
@@ -108,7 +108,12 @@
             font-size: 0.9rem;
             text-align: center;
         }
-        /* 响应式布局：小屏幕时卡片垂直堆叠 */
+        /* 响应式布局：中等屏幕时显示两列，小屏幕时显示一列 */
+        @media (max-width: 1100px) {
+            .portal-card {
+                max-width: calc(50% - 30px); /* 两列布局 */
+            }
+        }
         @media (max-width: 768px) {
             .portal-container {
                 flex-direction: column;
@@ -116,6 +121,12 @@
             }
             .portal-card {
                 max-width: 100%;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -125,10 +136,10 @@
         <div class="header">
             <div class="logo">📘</div>
             <h1>SeeU 突破进阶训练</h1>
-            <p class="subtitle">欢迎访问训练资料中心。请根据您的需求，选择下方对应的手册入口。</p>
+            <p class="subtitle">欢迎访问官方资料中心。所有关键文档已为您整合，请根据需求选择入口。</p>
         </div>
 
-        <!-- 核心：双入口卡片 -->
+        <!-- 核心：三入口卡片 -->
         <div class="portal-container">
             <!-- 卡片1：总操作指南 -->
             <div class="portal-card">
@@ -138,7 +149,7 @@
                     包含SeeU突破进阶训练系统的完整使用流程、步骤详解、功能操作说明及常见问题解答。建议所有用户首先阅读。
                 </p>
                 <a href="SeeU突破进阶训练 - 总操作指南.html" class="card-button">
-                    进入详细操作指南
+                    进入详细指南
                 </a>
             </div>
 
@@ -153,11 +164,23 @@
                     了解产品详情
                 </a>
             </div>
+
+            <!-- 卡片3：案例展示 (新增) -->
+            <div class="portal-card">
+                <div class="card-icon">🏆</div>
+                <h2 class="card-title">案例展示</h2>
+                <p class="card-desc">
+                    查看“巩固3期”学员的成功应用案例、效果数据与心得分享，了解系统在实际训练中取得的成果。
+                </p>
+                <a href="SeeU巩固3期-案例展示.html" class="card-button">
+                    查看精彩案例
+                </a>
+            </div>
         </div>
 
         <div class="footer">
-            <p>© 2025 SeeU 训练平台 • 官方资料中心入口</p>
-            <p style="margin-top:5px; font-size:0.85rem; color:#aaa;">本页面索引所有关键文档</p>
+            <p>© 2023 SeeU 训练平台 • 官方资料中心入口</p>
+            <p style="margin-top:5px; font-size:0.85rem; color:#aaa;">本页面索引所有关键文档 | 保持更新</p>
         </div>
     </div>
 </body>
